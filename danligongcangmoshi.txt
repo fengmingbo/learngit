@@ -1,3 +1,4 @@
+text
 Reader.interface
 public interface Reader {
     void read();
