@@ -1,0 +1,50 @@
+Reader.interface
+public interface Reader {
+    void read();
+}
+
+Factory.interface
+public interface Factory {
+    Reader getReader();
+}
+
+GifReader.class
+import android.util.Log;
+public class GifReader implements Reader {
+
+    private static final String TAG = "GifReader";
+
+    private volatile static GifReader instance;
+
+    private GifReader(){};
+
+    @Override
+    public void read() {
+        Log.d(TAG,"gifReader");
+    }
+
+    public static GifReader getInstance(){
+        if(instance==null){
+            synchronized (GifReader.class){
+                if(instance==null)
+                    instance=new GifReader();
+            }
+        }
+        return instance;
+    }
+}
+
+GifReaderFactory.class
+public class GifReaderFactory implements Factory{
+
+    @Override
+    public Reader getReader() {
+        return GifReader.getInstance();
+    }
+}
+Main函数：
+Factory factory=new GifReaderFactory();
+Reader gifReader=factory.getReader();
+gifReader.read();
+
+
